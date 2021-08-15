@@ -60,6 +60,12 @@ function insertStyle()
     win.webContents.executeJavaScript(code)
 }
 
+function insertDraggableArea()
+{
+    const code = arguments.callee.code ||= fs.readFileSync('./assets/js/insertDraggableArea.js')
+    win.webContents.executeJavaScript(code)
+}
+
 function insertURLInput()
 {
     const code = arguments.callee.code ||= fs.readFileSync('./assets/js/insertURLInput.js')
