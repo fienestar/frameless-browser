@@ -36,9 +36,23 @@ function togglePIPMode()
 
 function registerShortcut()
 {
-    globalShortcut.register('F11', toggleFullscreen)
-    globalShortcut.register('CmdOrCtrl+M', toggleFullscreen)
-    globalShortcut.register('CmdOrCtrl+P', togglePIPMode)
+    function register(key, callback)
+    {
+        function callback_wrapper()
+        {
+            if(win.isFocused())
+                callback()
+        }
+
+        if(Array.isArray(key))
+            globalShortcut.registerAll(key, callback_wrapper)
+        else
+            globalShortcut.register(key, callback_wrapper)
+    }
+
+    register(['F11', 'CmdOrCtrl+M'], toggleFullscreen)
+    register('CmdOrCtrl+P', togglePIPMode)
+    register('CmdOrCtrl+L', insertURLInput)
 }
 
 app.whenReady().then(() => {
