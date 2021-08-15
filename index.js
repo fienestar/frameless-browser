@@ -22,6 +22,23 @@ function createWindow()
         fullscreenable: false,
     })
 
+    win.webContents.session.webRequest.onHeadersReceived({ urls: ["*://*/*"] },
+        (details, callback) => {
+            const header = details.responseHeaders
+            delete header['X-Frame-Options'];
+            delete header['x-frame-options'];
+            delete header['content-security-policy'];
+
+            callback({ cancel: false, responseHeaders: header });
+        }
+    );
+
+    win.webContents.on("did-navigate", () => {
+        insertStyle()
+        insertDraggableArea()
+        insertURLInput()
+    })
+
     win.loadURL('https://google.com')
 }
 
@@ -37,9 +54,21 @@ function togglePIPMode()
     win.setAlwaysOnTop(!win.isAlwaysOnTop())
 }
 
+function insertStyle()
+{
+    const code = arguments.callee.code ||= fs.readFileSync('./assets/js/insertStyle.js')
+    win.webContents.executeJavaScript(code)
+}
+
 function insertURLInput()
 {
     const code = arguments.callee.code ||= fs.readFileSync('./assets/js/insertURLInput.js')
+    win.webContents.executeJavaScript(code)
+}
+
+function enableURLInput()
+{
+    const code = arguments.callee.code ||= fs.readFileSync('./assets/js/enableURLInput.js')
     win.webContents.executeJavaScript(code)
 }
 
@@ -61,7 +90,7 @@ function registerShortcut()
 
     register(['F11', 'CmdOrCtrl+M'], toggleFullscreen)
     register('CmdOrCtrl+P', togglePIPMode)
-    register('CmdOrCtrl+L', insertURLInput)
+    register('CmdOrCtrl+L', enableURLInput)
 }
 
 app.whenReady().then(() => {
