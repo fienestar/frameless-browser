@@ -22,7 +22,7 @@ function createWindow()
         fullscreenable: false,
     })
 
-    win.loadURL('https://youtube.com')
+    win.loadURL('https://google.com')
 }
 
 function toggleFullscreen()
