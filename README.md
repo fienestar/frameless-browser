@@ -1,4 +1,4 @@
-# franeless-browser
+# frameless-browser
 
 | 키 | 설명 |
 |:---:|:---:|
