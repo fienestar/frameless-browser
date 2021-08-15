@@ -9,17 +9,7 @@ function createWindow() {
         fullscreenable: false,
     })
 
-    win.webContents.session.webRequest.onHeadersReceived({ urls: ["*://*/*"] },
-        (details, callback) => {
-            const header = details.responseHeaders
-            delete header['X-Frame-Options'];
-            delete header['x-frame-options'];
-
-            callback({ cancel: false, responseHeaders: header });
-        }
-    );
-
-    win.loadFile('./index.html')
+    win.loadURL('https://youtube.com')
 }
 
 function toggleFullscreen()
