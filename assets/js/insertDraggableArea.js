@@ -10,12 +10,12 @@
     }
 
     document.addEventListener("keydown", ev => {
-        if (ev.key == "Control")
+        if (ev.key === "Control" || ev.key === "Meta")
             show()
     })
 
     document.addEventListener("keyup", ev => {
-        if (ev.key == "Control")
+        if (ev.key === "Control" || ev.key === "Meta")
             show(false)
     })
 
